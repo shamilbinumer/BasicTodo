@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div id="tasks">
+      <input
+        id="task"
+        type="text"
+        onchange="addTask()"
+        placeholder="Add task"
+      />
+      <div id="item">
+       
+      </div>
+    </div>
+
+    <script>
+      let data = document.getElementById("task");
+      function addTask() {
+        let task = data.value;
+
+        fetch("http://localhost:3001/api/addTask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ task }),
+        })
+          .then(() => {
+            alert("Task Added");
+          })
+          .catch("error");
+        getTodo();
+
+        data.value = "";
+      }
+      async function getTodo() {
+        const task = await fetch("http://localhost:3001/api/gettask");
+        const data = await task.json();
+        s = "";
+        data.map((dt) => {
+          s += `<div class="items">
+                <div  class="details">
+                <span>${dt.task}</span>
+                </div>
+                <div class="options">
+                    <button onclick="edit('${dt.task}')">edit</button>
+                    <button onclick="delTodo('${dt._id}')">delete</button>
+                </div>
+            </div> `;
+        });
+        document.getElementById("item").innerHTML = s;
+      }
+
+      getTodo();
+
+      function delTodo(id){
+        fetch(`http://localhost:3001/api/delTask/${id}`,{
+          method:"DELETE",
+        }).then((data)=>{
+          if(data.status==200){
+            alert("deleted")
+          }else{
+            alert("error")
+          }
+          getTodo()
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }
+
+    </script>
+  </body>
+</html>

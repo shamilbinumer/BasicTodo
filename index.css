@@ -1,0 +1,35 @@
+body {
+  background-color: #066acd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#task{
+    margin: 15px 15px 15px 15px;
+    width: 400px;
+    height: 40px;
+    font-size: 30px;
+    border: none;
+}
+#tasks {
+  background-color: white;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  border: 2px solid grey;
+}
+
+.items {
+  display: flex;
+  margin: 7px;
+  justify-content: center;
+}
+.details{
+    width: 300px;
+    height: 30px;
+}
+
+.details span{
+    font-size: 24px;
+}
+
